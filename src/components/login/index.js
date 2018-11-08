@@ -1,9 +1,10 @@
 import React from 'react';
 import '../../styles/login.css';
 
-const Login = () => {
+const Login = ({ validateUser = () => {}, isValid }) => {
+
         return (
-            <div className="body-login row">
+            <div className={isValid ? 'body-login isValid row' : 'body-login row'}>
                 <div className="main-login col-xs-12 col-sm-6 col-md-4">
                     <img src="images/img_avatar.png" />
                     <div className="user-inputs">
@@ -19,7 +20,7 @@ const Login = () => {
                             </div>
                             <input type="password" class="form-control" id="basic-url" aria-describedby="basic-addon3" />
                         </div>
-                        <button type="button" class="btn btn-primary btn-lg btn-block">Ingresar</button>
+                        <button type="button" class="btn btn-primary btn-lg btn-block" onClick={validateUser}>Ingresar</button>
                     </div>
                 </div>
             </div>
