@@ -1,0 +1,15 @@
+.main-dashboard {
+    border: 1px solid black;
+    height: 650px;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin: auto;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.42),
+            0 2px 4px 0 rgba(0,0,0,0.08);
+    margin-top: -1500px;
+    transition: all 0.9s ease-in-out;
+}
+.main-dashboard.isLoged {
+    margin-top: 50px;
+    transition: all 0.9s ease-in-out;
+
+}
