@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TableComponent from '../shared/table/index';
 import '../../styles/dashboard.css';
 import ChallengeGbm from '../../api/challenge';
+import Spinner from '../shared/spinner';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -39,13 +40,13 @@ class Dashboard extends Component {
         return (
             <div className="row">
                 <div className={isValid ? 'main-dashboard col-10 isLoged' : 'main-dashboard col-10'}>
-                    {!(data && data.resultObj.length > 0) ? <TableComponent headerTitles={header} data={data}/> 
+                    {(data && data.resultObj.length > 0) ? <TableComponent headerTitles={header} data={data}/> 
                     :
-                    <div>
+                    <div className="empty">
                         <span>
                             La información se está cargado, espere un momento por favor.
                         </span>
-                        <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                        <Spinner />
                     </div>
                     }
                 </div>

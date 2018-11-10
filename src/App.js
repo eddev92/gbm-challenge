@@ -5,6 +5,7 @@ import Login from './components/login';
 import ChallengeGbm from './api/challenge'
 import Auth from './api/auth';
 import Dashboard from './components/dashboard';
+import NavComponent from './components/shared/nav';
 let init = 0;
 class App extends Component {
   constructor(props) {
@@ -88,6 +89,7 @@ api.getData()
     console.log(user)
     return (
       <div className="App" style={{backgroundImage: `url(${ROUTE_IMG_BACKGROUND})`}}>
+        <NavComponent />
         <Login validateUser={this.validateUser} isValid={isValid} user={user} handleChange={this.handleChange}/>
         <Dashboard dashboardActive={dashboardActive} isValid={isValid} data={data} auth={auth} />
       </div>
