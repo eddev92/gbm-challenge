@@ -24,7 +24,7 @@ class App extends Component {
       if (this.state.isValid === true && this.state.dashboardActive === true) {
         setTimeout(() => {
           this.loadData();
-        }, 1000)
+        }, 2000)
 
       }
     }
@@ -50,17 +50,17 @@ return api.getData()
     this.setState({ dashboardActive: false })
   }
   validateUser = () => {
-    this.setState({ isValid: true, dashboardActive: true, validatorAux: true  })
+    this.setState({ isValid: true, dashboardActive: true  })
   }
   render() {
-    const { isValid, dashboardActive, validatorAux, data } = this.state;
+    const { isValid, dashboardActive, data } = this.state;
 console.log(isValid)
 console.log(dashboardActive)
 console.log('data', data)
     return (
       <div className="App" style={{backgroundImage: `url(${ROUTE_IMG_BACKGROUND})`}}>
         <Login validateUser={this.validateUser} isValid={isValid} />
-        <Dashboard dashboardActive={dashboardActive} validatorAux={validatorAux} isValid={isValid} data={data} />
+        <Dashboard dashboardActive={dashboardActive} isValid={isValid} data={data} />
       </div>
     );
   }

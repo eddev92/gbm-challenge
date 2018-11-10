@@ -6,9 +6,9 @@ const TableComponent = ({ headerTitles = [], data }) => {
     console.log(data)
 
         return (
-            <div className="main-table">
-              <table>
-                <thead className="thead-default">
+            <div className="main-table table-responsive">
+              <table className="table table-hover">
+                <thead className="thead-default thead-dark">
                     <tr className="text-black">
                         {headerTitles && headerTitles.map((e, index) => <th key={index}>{e}</th>)}
                     </tr>

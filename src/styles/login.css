@@ -10,7 +10,7 @@
     height: 100%;
 }
 .user-inputs {
-    padding: 60px;
+    padding: 65px 40px;
 }
 .username, .password {
     margin-bottom: 30px;
@@ -22,11 +22,13 @@
     margin-bottom: -20px;
 }
 .body-login {
-    transition: all 0.9s ease-in-out;
+    transition: all 0.8s ease-in-out;
     position: absolute;
     width: 100%;
     height: 100%;
+    margin: 0;
 }
 .body-login.isValid {
     margin-top: -800px;
+    transition: all 0.8s ease-in-out;
 }

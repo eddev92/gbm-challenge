@@ -5,7 +5,7 @@ const Login = ({ validateUser = () => {}, isValid }) => {
     console.log(isValid)
         return (
             <div className={isValid ? 'body-login isValid row' : 'body-login row'}>
-                <div className="main-login col-xs-12 col-sm-6 col-md-4">
+                <div className="main-login col-xs-12 col-sm-7 col-md-6">
                     <img src="images/img_avatar.png" />
                     <div className="user-inputs">
                         <div className="input-group username">

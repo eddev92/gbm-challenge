@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import TableComponent from '../shared/table/index';
-import ChallengeGbm from '../../api/challenge'
 import '../../styles/dashboard.css';
 
 class Dashboard extends Component {
@@ -17,9 +16,8 @@ class Dashboard extends Component {
         }
     }
     render() {
-        // const { data } = this.state;
-        const { isValid, dashboardActive, data = [] } = this.props;
-        const header = ['FECHA', 'POLIZA', 'CLIENTE', 'PLACA'];
+        const { isValid, data = [] } = this.props;
+        const header = ['FECHA', 'PORCENTAJE', 'PRECIO', 'VOLUMEN'];
 
         return (
             <div className="row">
