@@ -15,6 +15,13 @@ class ChallengeGbm {
             })
             .catch(catchFn);
     }
+    getUser(){
+        return axios.get('/user', HEADERS_REQUEST)
+            .then(response => {
+                return response.data;
+            })
+            .catch(catchFn);
+    }
 }
 
 export default ChallengeGbm;

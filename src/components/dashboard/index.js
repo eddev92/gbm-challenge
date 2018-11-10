@@ -22,7 +22,7 @@ class Dashboard extends Component {
         return (
             <div className="row">
                 <div className={isValid ? 'main-dashboard col-10 isLoged' : 'main-dashboard col-10'}>
-                    {data.resultObj.length > 0 ? <TableComponent headerTitles={header} data={data}/> : <span>La información se está cargado, espere un momento por favor.</span>}
+                    {( data && data.resultObj.length > 0) ? <TableComponent headerTitles={header} data={data}/> : <span>La información se está cargado, espere un momento por favor.</span>}
                 </div>
             </div>
         )

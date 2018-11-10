@@ -3,6 +3,7 @@ import './App.css';
 import {ROUTE_IMG_BACKGROUND} from './constants/constants';
 import Login from './components/login';
 import ChallengeGbm from './api/challenge'
+import Auth from './api/auth';
 import Dashboard from './components/dashboard';
 let init = 0;
 class App extends Component {
@@ -17,6 +18,10 @@ class App extends Component {
           resultObj: [],
           msg: 'Ok'
       },
+      user: {
+        documentId: '',
+        password: ''
+      }
     }
   }
   componentDidUpdate() {
@@ -32,34 +37,55 @@ class App extends Component {
 loadData = () => {
 const api = new ChallengeGbm();
 
-return api.getData()
-.then((response) => {
-    console.log('response', response)
-    init = 1;
-    this.setState({ data: response }, () => {
-      this.resetValue();
-    })
-})
-.catch((error) => {
-    init = 2;
-   return console.log('error', error)
-});
+api.getData()
+  .then((response) => {
+      console.log('response', response)
+      init = 1;
+      this.setState({ data: response }, () => {
+        this.resetValue();
+      })
+  })
+  .catch((error) => {
+      init = 2;
+    return console.log('error', error)
+  });
 }
   
   resetValue = () => {    
     this.setState({ dashboardActive: false })
   }
   validateUser = () => {
+    const user = {
+
+    }
+    // const api = new Auth();
+
+    // api.AuthUser(user)
+    //   .then((response) => {
+    //       console.log('response', response)
+    //       init = 1;
+    //       this.setState({ data: response }, () => {
+    //         this.resetValue();
+    //       })
+    //   })
+    //   .catch((error) => {
+    //       init = 2;
+    //     return console.log('error', error)
+    //   });  
     this.setState({ isValid: true, dashboardActive: true  })
   }
+  handleChange = (evt) => {
+    const { user } = this.state;
+    if (evt && evt.target.length) {
+      console.log('evt', evt.target);
+    }
+  }
   render() {
-    const { isValid, dashboardActive, data } = this.state;
-console.log(isValid)
-console.log(dashboardActive)
-console.log('data', data)
+    const { isValid, dashboardActive, data, user } = this.state;
+
     return (
       <div className="App" style={{backgroundImage: `url(${ROUTE_IMG_BACKGROUND})`}}>
-        <Login validateUser={this.validateUser} isValid={isValid} />
+        <Login validateUser={this.validateUser} isValid={isValid} user={user} handleChange={this.handleChange}/>
         <Dashboard dashboardActive={dashboardActive} isValid={isValid} data={data} />
       </div>
     );

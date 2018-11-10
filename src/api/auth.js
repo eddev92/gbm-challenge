@@ -7,12 +7,19 @@ const catchFn = error => {
 };
 
 class Auth {
-    AuthUser() {
-        // return axios.get('/auth.json', HEADERS_REQUEST)
-        //     .then(response => {
-        //         return response.data;
-        //     })
-        //     .catch(catchFn);
+    AuthUser(user) {
+        return axios.post('/auth', user, HEADERS_REQUEST)
+            .then(response => {
+                return response.data;
+            })
+           .catch(catchFn);
+    }
+    getToken() {
+        return axios.get('/token', HEADERS_REQUEST)
+            .then(response => {
+                return response.data;
+            })
+           .catch(catchFn);
     }
 }
 
