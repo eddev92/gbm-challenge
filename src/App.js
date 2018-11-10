@@ -20,7 +20,7 @@ class App extends Component {
     }
   }
   componentDidUpdate() {
-    if (init === 0) {
+    if (init === 0 && this.state.isValid) {
       if (this.state.isValid === true && this.state.dashboardActive === true) {
         setTimeout(() => {
           this.loadData();

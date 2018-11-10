@@ -16,21 +16,6 @@ class Dashboard extends Component {
             isLogged: props.isValid
         }
     }
-    componentDidMount() {
-            this.loadData();
-    }
-    loadData = () => {
-        const api = new ChallengeGbm();
-        
-        return api.getData()
-        .then((response) => {
-            console.log('response', response)
-            return this.setState({ data: response })
-        })
-        .catch((error) => {
-           return console.log('error', error)
-		});
-    }
     render() {
         // const { data } = this.state;
         const { isValid, dashboardActive, data = [] } = this.props;
