@@ -15,8 +15,8 @@ class ChallengeGbm {
             })
             .catch(catchFn);
     }
-    getUser(){
-        return axios.get('/user', HEADERS_REQUEST)
+    getUser(auth){
+        return axios.post('/user', auth, HEADERS_REQUEST)
             .then(response => {
                 return response.data;
             })

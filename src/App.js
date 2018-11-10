@@ -19,9 +19,10 @@ class App extends Component {
           msg: 'Ok'
       },
       user: {
-        username: '',
+        userName: '',
         password: ''
-      }
+      },
+      auth: {}
     }
   }
   componentDidUpdate() {
@@ -56,18 +57,23 @@ api.getData()
   }
   validateUser = () => {
     const { user } = this.state;
-    console.log('user send auth', user)
+    const reset = {
+        userName: '',
+        password: ''
+      }
     const api = new Auth();
 
     api.AuthUser(user)
       .then((response) => {
-         return console.log('response', response)          
+          console.log('response App.js', response)
+          if (response.status) {
+            alert('usuario invalido')
+           return this.setState({ isValid: false, dashboardActive: false, user: reset });
+          }
+          this.setState({ isValid: true, dashboardActive: true, auth: response });
       })
-      .catch((error) => {
-        return console.log('error', error)
-    });  
-    this.setState({ isValid: true, dashboardActive: true  })
   }
+
   handleChange = (evt) => {
     const { user } = this.state;
     if (evt && evt.target) {
@@ -78,12 +84,12 @@ api.getData()
     }
   }
   render() {
-    const { isValid, dashboardActive, data, user } = this.state;
+    const { isValid, dashboardActive, data, user, auth } = this.state;
     console.log(user)
     return (
       <div className="App" style={{backgroundImage: `url(${ROUTE_IMG_BACKGROUND})`}}>
         <Login validateUser={this.validateUser} isValid={isValid} user={user} handleChange={this.handleChange}/>
-        <Dashboard dashboardActive={dashboardActive} isValid={isValid} data={data} />
+        <Dashboard dashboardActive={dashboardActive} isValid={isValid} data={data} auth={auth} />
       </div>
     );
   }

@@ -10,6 +10,7 @@ class Auth {
     AuthUser(user) {
         return axios.post('/auth', user, HEADERS_REQUEST)
             .then(response => {
+                console.log('REPSONSE class auth', response);
                 return response.data;
             })
            .catch(catchFn);

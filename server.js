@@ -10,11 +10,12 @@ app.use(cors())
 let data = {};
 let users = [];
 let user = {};
+let userInfo = {};
 let tokens = [];
 let auth = [];
 
 // find User
-function findUser(userName, password, data) {
+function findUserWithToken(userName, password, data) {
   let obj;
   // retorna token y userName
   data.find(usr => {
@@ -25,14 +26,32 @@ function findUser(userName, password, data) {
   return obj;
 };
 
+function findUser(userName, data) {
+  let user;
+  // retorna user info
+  data.length > 0 && data.find(usr => {
+   if (usr.userName === userName) {
+      user = usr;
+    } 
+  })
+  return user;
+};
+
 // loadData for App
 
-function getUsers() {
+function getUsers(userName, res) {
   fs.readFile('./mocks/users.json', 'utf8', (err, data) => {
     if (err) return console.log('err', err);
-    users = JSON.parse(data);
-    console.log(users)
-    return users;
+    console.log('userName getUser', userName)
+    const aux = JSON.parse(data);
+    console.log('data getUser', aux)
+    userInfo = findUser(userName, aux);
+    console.log('userInfo', userInfo)
+      if (!userInfo) {
+        return res.send({status: 404, message: 'user not found'})
+      } else {
+        res.send(userInfo);
+      }
     });
 }
 
@@ -45,12 +64,12 @@ function getTokens() {
     });
 }
 
-function authenticationUser(username, password, res) {
+function authenticationUser(userName, password, res) {
   fs.readFile('./mocks/auth.json', 'utf8', (err, data) => {
     if (err) return console.log('err', err);
     auth = JSON.parse(data);
     console.log('auth', auth)
-    user = findUser(username, password, auth)
+    user = findUserWithToken(userName, password, auth)
     console.log('user found', user)
       if (!user) {
         return res.send({status: 404, message: 'user not found'})
@@ -78,20 +97,22 @@ app.get('/getData', (req, res) => {
 
 app.post('/auth', (req, res) => {
   console.log('req.body', req.body)
-  const { username, password } = req.body
-  // authenticationUser(username, password);
-  authenticationUser(username, password, res);
+  const { userName, password } = req.body
+  // authenticationUser(userName, password);
+  authenticationUser(userName, password, res);
 });
 app.get('/token', (req, res) => {
   res.send(users);
 });
-app.get('/user', (req, res) => {
-  res.send(users);
+app.post('/user', (req, res) => {
+  console.log('req.body', req.body)
+  const { userName, token } = req.body;
+  getUsers(userName, res);
 });
 app.listen(8000, () => {
     loadGbmService()
     getTokens();
     // authenticationUser();
-    getUsers();
+    // getUsers();
     console.log('app corriendo en el puerto 8000')
 })

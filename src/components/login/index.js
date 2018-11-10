@@ -8,11 +8,11 @@ const Login = ({ validateUser = () => {}, isValid, user = {}, handleChange = () 
                 <div className="main-login col-xs-12 col-sm-7 col-md-6">
                     <img src="images/img_avatar.png" />
                     <div className="user-inputs">
-                        <div className="input-group username">
+                        <div className="input-group userName">
                             <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon3">Username</span>
+                                <span className="input-group-text" id="basic-addon3">UserName</span>
                             </div>
-                            <input type="text" value={user.username} onChange={handleChange.bind(user.username)} className="form-control" id="username" aria-describedby="basic-addon3" />
+                            <input type="text" value={user.userName} onChange={handleChange.bind(user.userName)} className="form-control" id="userName" aria-describedby="basic-addon3" />
                         </div>
                         <div className="input-group password">
                             <div className="input-group-prepend">
