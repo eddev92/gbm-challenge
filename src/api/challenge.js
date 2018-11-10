@@ -1,50 +1,24 @@
-import { ROUTE_PROVIDER } from '../constants/routes/index'
-import _api from '../config/axios';
-import { Service } from '../config/service';
-import * as tunnel from 'tunnel';
-import axios, { AxiosInstance } from 'axios';
-
-const agent = tunnel.httpsOverHttp({
-    proxy: {
-        host: 'proxy.mycorp.com',
-        port: 8000,
-    },
-});
-const axiosClient = axios.create({
-    baseURL: 'https://some.api.com:443',
-    httpsAgent: agent,
-    proxy: false,
-    headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-     }   
-});
-class ChallengeGbm {
-
-    getData() {        
-            // return new Promise((resolve, reject) => {
-            //     this.api.get(ROUTE_PROVIDER, {})
-            //     .then((response) => {
-            //         return resolve(response.data);
-            //     })
-            //     .catch((error) => {
-            //         return console.log(error)
-            //     });
-            // })
-const  headers = {
-    Authorization: '',
-    'Content-Type': 'application/json',
+// import Api from './api';
+import { ROUTE_PROVIDER } from '../constants/routes'
+import axios from 'axios';
+axios.defaults.baseURL = 'http://localhost:8000';
+const catchFn = error => {
+	console.log('error: ', error);
+	// console.log('error: ', string, `${error.request.method} - ${error.config.url} - ${error.response.status ? error.response.status : '' } :`, JSON.stringify(error.response.data));
+	return console.log(error.response);
+};
+const headers = {
     Accept: 'application/json',
- }
-            return axios.get(ROUTE_PROVIDER, headers)
-            .then((response) => {
-                console.log('RESPONSE ChallengeGbm', response)
-                         return response.data;
-                     })
-                     .catch((error) => {
-                         return console.log('ERROR ChallengeGbm: ', error)
-                     });
-    }
+    'Content-Type': 'application/json'
+}
+class ChallengeGbm {
+	getData(){
+        return axios.get(ROUTE_PROVIDER, headers)
+            .then(response => {
+                return response.data;
+            })
+            .catch(catchFn);
+	}
 }
 
 export default ChallengeGbm;

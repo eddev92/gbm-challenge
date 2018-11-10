@@ -1,0 +1,8 @@
+.main-table {
+    max-height: 500px;
+    overflow-y: auto;
+    margin: 35px;
+}
+table {
+    width: 100%;
+}

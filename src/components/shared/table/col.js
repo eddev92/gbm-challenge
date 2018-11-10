@@ -1,12 +1,11 @@
 import React from 'react';
 import '../../../styles/col.css';
 
-const ColComponent = ({ }) => {
-
+const ColComponent = ({ element, index }) => {
         return (
-            <div className="main-col">
-               
-            </div>
+            <td key={index}>
+               {element && <div>{element}</div>}
+            </td>
         )   
 }
 

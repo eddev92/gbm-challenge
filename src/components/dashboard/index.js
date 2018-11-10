@@ -8,18 +8,23 @@ class Dashboard extends Component {
         super(props);
 
         this.state = {
-            data: {}
+            data: {
+                result: false,
+                resultObj: [],
+                msg: 'Ok'
+            },
+            isLogged: props.isValid
         }
     }
-    componentDidUpdate() {
+    componentDidMount() {
             this.loadData();
     }
     loadData = () => {
-        const service = new ChallengeGbm();
+        const api = new ChallengeGbm();
         
-        service.getData()
+        return api.getData()
         .then((response) => {
-            console.log('response', response.data)
+            console.log('response', response)
             return this.setState({ data: response })
         })
         .catch((error) => {
@@ -27,12 +32,14 @@ class Dashboard extends Component {
 		});
     }
     render() {
-        const { isLoged } = this.props;
-        console.log(this.state.data)
+        // const { data } = this.state;
+        const { isValid, dashboardActive, data = [] } = this.props;
+        const header = ['FECHA', 'POLIZA', 'CLIENTE', 'PLACA'];
+
         return (
             <div className="row">
-                <div className={isLoged ? 'main-dashboard col-10 isLoged' : 'main-dashboard col-10'}>
-                    <TableComponent />
+                <div className={isValid ? 'main-dashboard col-10 isLoged' : 'main-dashboard col-10'}>
+                    {data.resultObj.length > 0 ? <TableComponent headerTitles={header} data={data}/> : <span>La información se está cargado, espere un momento por favor.</span>}
                 </div>
             </div>
         )
