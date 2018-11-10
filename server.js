@@ -9,8 +9,21 @@ app.use(cors())
 
 let data = {};
 let users = [];
+let user = {};
 let tokens = [];
 let auth = [];
+
+// find User
+function findUser(userName, password, data) {
+  let obj;
+  // retorna token y userName
+  data.find(usr => {
+   if (usr.userName === userName && usr.password === password) {
+      obj = { userName, token: usr.token };
+    } 
+  })
+  return obj;
+};
 
 // loadData for App
 
@@ -32,12 +45,18 @@ function getTokens() {
     });
 }
 
-function authenticationUser() {
+function authenticationUser(username, password, res) {
   fs.readFile('./mocks/auth.json', 'utf8', (err, data) => {
     if (err) return console.log('err', err);
     auth = JSON.parse(data);
-    console.log(auth)
-    return auth;
+    console.log('auth', auth)
+    user = findUser(username, password, auth)
+    console.log('user found', user)
+      if (!user) {
+        return res.send({status: 404, message: 'user not found'})
+      } else {
+        res.send(user);
+      }
     });
 }
 
@@ -58,7 +77,10 @@ app.get('/getData', (req, res) => {
   });
 
 app.post('/auth', (req, res) => {
-  res.send(users);
+  console.log('req.body', req.body)
+  const { username, password } = req.body
+  // authenticationUser(username, password);
+  authenticationUser(username, password, res);
 });
 app.get('/token', (req, res) => {
   res.send(users);
@@ -69,7 +91,7 @@ app.get('/user', (req, res) => {
 app.listen(8000, () => {
     loadGbmService()
     getTokens();
-    authenticationUser();
+    // authenticationUser();
     getUsers();
     console.log('app corriendo en el puerto 8000')
 })

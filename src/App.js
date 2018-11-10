@@ -19,7 +19,7 @@ class App extends Component {
           msg: 'Ok'
       },
       user: {
-        documentId: '',
+        username: '',
         password: ''
       }
     }
@@ -55,34 +55,31 @@ api.getData()
     this.setState({ dashboardActive: false })
   }
   validateUser = () => {
-    const user = {
+    const { user } = this.state;
+    console.log('user send auth', user)
+    const api = new Auth();
 
-    }
-    // const api = new Auth();
-
-    // api.AuthUser(user)
-    //   .then((response) => {
-    //       console.log('response', response)
-    //       init = 1;
-    //       this.setState({ data: response }, () => {
-    //         this.resetValue();
-    //       })
-    //   })
-    //   .catch((error) => {
-    //       init = 2;
-    //     return console.log('error', error)
-    //   });  
+    api.AuthUser(user)
+      .then((response) => {
+         return console.log('response', response)          
+      })
+      .catch((error) => {
+        return console.log('error', error)
+    });  
     this.setState({ isValid: true, dashboardActive: true  })
   }
   handleChange = (evt) => {
     const { user } = this.state;
-    if (evt && evt.target.length) {
-      console.log('evt', evt.target);
+    if (evt && evt.target) {
+      const id = evt.target.id;
+      const auxUser = { ...user };
+      auxUser[id] = evt.target.value;
+      this.setState({ user: auxUser });
     }
   }
   render() {
     const { isValid, dashboardActive, data, user } = this.state;
-
+    console.log(user)
     return (
       <div className="App" style={{backgroundImage: `url(${ROUTE_IMG_BACKGROUND})`}}>
         <Login validateUser={this.validateUser} isValid={isValid} user={user} handleChange={this.handleChange}/>
