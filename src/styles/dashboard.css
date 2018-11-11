@@ -13,6 +13,15 @@
     transition: all 0.9s ease-in-out;
 
 }
+.main-dashboard .form-group {
+  display: -webkit-inline-box;
+  width: auto;
+  margin: auto;
+  padding-top: 20px;
+}
+.main-dashboard select, .mail-user {
+  margin-right: 10px;
+}
 .empty {
     width: 50%;
     margin: 150px auto;

@@ -14,7 +14,7 @@ const TableComponent = ({ headerTitles = [], data }) => {
                 </thead>
                 <tbody>
                 {
-                    data.resultObj.map((elmt, index) => (
+                    data.map((elmt, index) => (
                         <RowComponent element={elmt} key={index}/>
                     ))
                 }
