@@ -18,7 +18,7 @@ Este proyecto fue desarrollado por (Edward David Llanca Haro (eddev92)).
 > Sobre la raíz de la carpeta clonada "/", ejecutar desde el terminal los siguientes comando:
     - npm install (Instalará todas las dependencias que necesita la aplicación para funcionar)
 
-    - npm start (Esto iniciará la aplicación y la abrirá en la ruta  "http://localhost:3000"
+    - npm start (Esto iniciará la aplicación y la abrirá en la ruta  "http://localhost:3000")
 
     - Abrir un segundo terminar ubicado en la raíz de la aplicación, tal cual el primer terminarl y ejecutar el siguiente comando:
         - npm run start:serever (Este comando iniciará con el server en express que usa la aplicación en el puerto 8000)
