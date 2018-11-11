@@ -16,6 +16,7 @@ Este proyecto fue desarrollado por (Edward David Llanca Haro (eddev92)).
 ### Ejecutando la aplicación
 
 > Sobre la raíz de la carpeta clonada "/", ejecutar desde el terminal los siguientes comando:
+###
     - npm install (Instalará todas las dependencias que necesita la aplicación para funcionar)
 
     - npm start (Esto iniciará la aplicación y la abrirá en la ruta  "http://localhost:3000")
