@@ -34,7 +34,6 @@ class App extends Component {
   componentDidMount() {
     token = localStorageConfig.getToken('token');
     userNameAux = localStorageConfig.getToken('userName');
-    console.log(token)
     if (this.state.isValid || this.state.dashboardActive || token) {
       this.loadData();
 
@@ -45,7 +44,6 @@ const api = new ChallengeGbm();
 
 api.getData()
   .then((response) => {
-      console.log('response', response)
       init = 1;
       this.setState({ data: response }, () => {
         this.resetValue();
@@ -70,7 +68,6 @@ api.getData()
 
     api.AuthUser(user)
       .then((response) => {
-          console.log('response App.js', response)
           if (response.status) {
             alert('usuario invalido')
            return this.setState({ isValid: false, dashboardActive: false, user: reset });
@@ -95,7 +92,6 @@ api.getData()
     }
   }
   handleUser = (user, value) => {
-    console.log('user in callback', user)
     if (value === 3) {
       return this.setState({ userLoaded: user })      
     }
@@ -104,7 +100,6 @@ api.getData()
     }
   }
   handleFinishSession = () => {
-    console.log('delete')
     const reset = {
       userName: '',
       password: ''
@@ -117,7 +112,6 @@ api.getData()
   }
   render() {
     const { isValid, dashboardActive, data, user, auth, userInfo, userLoaded } = this.state;
-    console.log('userInfo in appjs', userInfo)
     if (token && userInfo) {
       return (
         <div className="App" style={{backgroundImage: `url(${ROUTE_IMG_BACKGROUND})`}}>

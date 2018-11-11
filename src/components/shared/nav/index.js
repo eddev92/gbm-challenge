@@ -1,8 +1,7 @@
 import React from 'react';
 import '../../../styles/nav.css';
 
-const NavComponent = ({ user = {}, token, handleFinishSession = () => {} }) => {
-    console.log('nav', user)
+const NavComponent = ({ user = {}, handleFinishSession = () => {} }) => {
     let fullName;
     fullName = (user) ? `${user.firstName || ''} ${user.secondName || ''}` : '';
         return (
