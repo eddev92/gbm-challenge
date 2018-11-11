@@ -4,6 +4,7 @@ import '../../styles/dashboard.css';
 import ChallengeGbm from '../../api/challenge';
 import Spinner from '../shared/spinner';
 let init = 0;
+let loadUser = 0;
 class Dashboard extends Component {
     constructor(props) {
         super(props);
@@ -39,17 +40,14 @@ class Dashboard extends Component {
         
     }
     componentWillReceiveProps(nextProps) {
-        console.log('/*********************/')
-        console.log('entro aqui componentWillReceiveProps dashboard nextProps ', nextProps)
-        console.log(init)
-        console.log(nextProps.isValid)
-        console.log('/*********************/')
-        // if (!nextProps.isValid && init === 1) {
-        //     this.getUser({userName: this.props.userNameAux, token: this.props.token});
-        // }
-        // if (init === 0) {
-        //     return this.getUser({userName: this.props.userNameAux, token: this.props.token});
-        // }
+        if (loadUser < 1 && !nextProps.dashboardActive && !nextProps.isValid) {
+            if (nextProps.token !== '') {
+                loadUser = 1;
+                console.log('bucle aqui D:')
+                this.getUser({userName: this.props.userNameAux, token: this.props.token});
+                }
+        }
+
         if (nextProps.dashboardActive) {
             if (nextProps.isValid && nextProps.auth.token.length >= 0) {
                 console.log('aqui bucle')
@@ -58,23 +56,29 @@ class Dashboard extends Component {
 
         }
     }
-    getUser(...user) {
-        console.log(user[0])
+    getUser(user) {
         const { auth } = this.props;
-        console.log(auth)
-        const val = auth ? auth: user[0];
         const api = new ChallengeGbm();
-        api.getUser(val)
+        if (auth.token) {
+            api.getUser(auth)
           .then((response) => {
-              console.log(response)
               init = 1;
               console.log(response)
               this.setState({userInfo: response}, () => {
                 this.props.handleUser(this.state.userInfo, init);
                 init = 3;
               })
-              return console.log('response', response)
           })
+        } else {
+            api.getUser(user)
+          .then((response) => {
+              init = 1;
+              this.setState({userInfo: response}, () => {
+                this.props.handleUser(this.state.userInfo, init);
+                init = 3;
+              })
+          })
+        }        
       }
     render() {
         const { isValid, data = [], token } = this.props;

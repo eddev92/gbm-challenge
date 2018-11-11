@@ -36,12 +36,14 @@ class App extends Component {
     token = localStorageConfig.getToken('token');
     userNameAux = localStorageConfig.getToken('userName');
     if (this.state.isValid || this.state.dashboardActive || token) {
+      console.log('componentDidMount app.js')
       this.loadData();
 
     }
   }
   componentDidUpdate() {
     if (this.state.auth.token !== '') {
+      console.log('componentDidUpdate app.js')
      token = localStorageConfig.getToken('token');
     }
   }
@@ -128,7 +130,8 @@ api.getData()
     console.log(userLoaded)
     console.log(userInfo)
     console.log('token', token)
-    if (token && userLoaded) {
+    if (token && userInfo) {
+      console.log('renderizo aca')
       return (
         <div className="App" style={{backgroundImage: `url(${ROUTE_IMG_BACKGROUND})`}}>
         {(isValid || token) && <NavComponent user={userLoaded ? userLoaded : userInfo} token={token} handleFinishSession={this.handleFinishSession}/>}
