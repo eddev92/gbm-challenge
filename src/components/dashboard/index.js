@@ -19,27 +19,8 @@ class Dashboard extends Component {
             userInfo: props.userInfo
         }
     }
-    componentDidMount() {
-        console.log('/*********************/')
-        console.log('entro aqui componentDidMount dashboard')
-        console.log('state dashboard', this.state)
-        console.log('/*********************/')
-        // if(this.props.token && this.props.userNameAux && init === 0) {
-        //     console.log('componentDidMount')
-        //     const api = new ChallengeGbm();
-        //     this.getUser({userName: this.props.userNameAux, token: this.props.token})
-            // api.getUser({userName: this.props.userNameAux, token: this.props.token})
-            //     .then((response) => {
-            //         console.log(response)
-            //         this.setState({userInfo: response}, () =>{
-            //             this.props.handleUser(response, 3);
-            //         })
-            //         return console.log('response', response)
-            //     })
-        // }
-        
-    }
     componentWillReceiveProps(nextProps) {
+        console.log(nextProps)
         if (loadUser < 1 && !nextProps.dashboardActive && !nextProps.isValid) {
             if (nextProps.token !== '') {
                 loadUser = 1;

@@ -29,6 +29,6 @@
     margin: 0;
 }
 .body-login.isValid {
-    margin-top: -800px;
+    margin-top: -1000px;
     transition: all 0.8s ease-in-out;
 }
