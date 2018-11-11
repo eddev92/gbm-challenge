@@ -4,9 +4,8 @@ import '../../../styles/row.css';
 import TransformData from '../../../utils/transform';
 
 const RowComponent = ({ element = {} }) => {
-    let list = null;
-  // transform array cols
   let cols = [];
+
   cols = TransformData.getCols(element);
     return (
             <tr>

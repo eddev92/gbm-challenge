@@ -5,7 +5,7 @@ const NavComponent = ({ user = {}, handleFinishSession = () => {} }) => {
     let fullName;
     fullName = (user) ? `${user.firstName || ''} ${user.secondName || ''}` : '';
         return (
-            <div class="main-nav container">
+            <div className="main-nav container">
                 <div className="row">
                     <div className="col-md-3">Administrador</div>
                     <div className="col-md-6 options">Hola, {fullName}</div>

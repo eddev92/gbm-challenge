@@ -1,4 +1,4 @@
-import { ROUTE_PROVIDER, HEADERS_REQUEST } from '../constants/routes'
+import { HEADERS_REQUEST } from '../constants/routes'
 import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:8000';
 const catchFn = error => {

@@ -20,20 +20,32 @@ class Dashboard extends Component {
                 type: '',
                 key: ''
             },
+            message: ''
         }
     }
     filterList = () => {
         const { data = []} = this.props;
         const { valueToFilter } = this.state;
         let filtereds = [];
-        console.log(data.resultObj)
+        if (valueToFilter.type === 'Default') {
+            alert('Ambos campos son requeridos para realizar la búsquedad')
+            return this.setState({ listFiltered: data.resultObj });
+        }
+        if(valueToFilter.key && valueToFilter.type) {
             data.resultObj.forEach((elmt) => {
                 if (elmt[valueToFilter.type].toString() === valueToFilter.key) {
                     filtereds.push(elmt);
+                    this.setState({ listFiltered: filtereds })
                 }
-                this.setState({ listFiltered: filtereds })
             })
-        
+        } else {
+            return alert('Ambos campos son requeridos para realizar la búsquedad')
+        }
+        if (filtereds.length === 0) {
+            this.setState({ listFiltered: data.resultObj })
+            alert('No se encontraron registros con el valor: ' + " " + valueToFilter.key);
+            
+        }
     }
     handleValueToFilter = (value) => {
         const { valueToFilter } = this.state;
@@ -56,14 +68,14 @@ class Dashboard extends Component {
         return (
             <div className="row">
                 <div className={(isValid || token) ? 'main-dashboard col-10 isLoged' : 'main-dashboard col-10'} >
-                <div class="form-group">
-                    <select class="form-control col-md-4" id="type" onChange={this.handleValueToFilter.bind(valueToFilter.type)} value={valueToFilter.type}>
-                        <option >Seleccione</option>
+                <div className="form-group">
+                    <select className="form-control col-md-4" id="type" onChange={this.handleValueToFilter.bind(valueToFilter.type)} value={valueToFilter.type}>
+                        <option value="Default">Seleccione</option>
                         <option value="Volumen">Volumen</option>
                         <option value="Precio">Precio</option>
                     </select>
-                    <input type="email" id="key" class="form-control col-md-6 mail-user" onChange={this.handleValueToFilter.bind(valueToFilter.key)} value={valueToFilter.key} placeholder="Ingrese volumen" />
-                    <button type="submit" class="btn btn-primary" onClick={this.filterList}>Buscar</button>
+                    <input type="email" id="key" className="form-control col-md-6 mail-user" onChange={this.handleValueToFilter.bind(valueToFilter.key)} value={valueToFilter.key} placeholder="Ingrese volumen" />
+                    <button type="submit" className="btn btn-primary" onClick={this.filterList}>Buscar</button>
                 </div>
                     {(data && data.resultObj.length > 0) 
                     ?
