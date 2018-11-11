@@ -13,11 +13,6 @@ Este proyecto fue desarrollado por (Edward David Llanca Haro (eddev92)).
     - Abrir algun terminal o se puede usar GitBash (click derecho dentro de la carpeta y ejecutar gitBash here)
     - Ejecutar el comando: "git clone https://github.com/eddev92/gbm-challenge.git", sobre la carpeta creada inicialmente.
     
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-
 ### Ejecutando la aplicación
 
 > Sobre la raíz de la carpeta clonada "/", ejecutar desde el terminal los siguientes comando:
