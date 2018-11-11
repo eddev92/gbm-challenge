@@ -8,8 +8,9 @@ import Dashboard from './components/dashboard';
 import NavComponent from './components/shared/nav';
 import localStorageConfig from './utils/local-storage';
 let init = 0;
-let token;
+let token = '';
 let userNameAux;
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -37,6 +38,11 @@ class App extends Component {
     if (this.state.isValid || this.state.dashboardActive || token) {
       this.loadData();
 
+    }
+  }
+  componentDidUpdate() {
+    if (this.state.auth.token !== '') {
+     token = localStorageConfig.getToken('token');
     }
   }
 loadData = () => {
@@ -92,10 +98,17 @@ api.getData()
     }
   }
   handleUser = (user, value) => {
-    if (value === 3) {
+    console.log('/*********************/')
+    console.log('entro handleUser')
+    console.log(user)
+    console.log(value)
+    console.log(init)
+    console.log(this.state.userInfo)
+    console.log('/*********************/')
+    if (value === 1) {
       return this.setState({ userLoaded: user })      
     }
-    if (init === 0 && this.state.dashboardActive && value <= 1) {
+    if (init === 0 && this.state.dashboardActive && value <= 1)  {
         this.setState({ userInfo: user })
     }
   }
@@ -112,7 +125,10 @@ api.getData()
   }
   render() {
     const { isValid, dashboardActive, data, user, auth, userInfo, userLoaded } = this.state;
-    if (token && userInfo) {
+    console.log(userLoaded)
+    console.log(userInfo)
+    console.log('token', token)
+    if (token && userLoaded) {
       return (
         <div className="App" style={{backgroundImage: `url(${ROUTE_IMG_BACKGROUND})`}}>
         {(isValid || token) && <NavComponent user={userLoaded ? userLoaded : userInfo} token={token} handleFinishSession={this.handleFinishSession}/>}

@@ -19,38 +19,64 @@ class Dashboard extends Component {
         }
     }
     componentDidMount() {
-        if(this.props.token && this.props.userNameAux && init === 0) {
-            const api = new ChallengeGbm();
-            api.getUser({userName: this.props.userNameAux, token: this.props.token})
-                .then((response) => {
-                    this.setState({userInfo: response}, () =>{
-                        this.props.handleUser(response, 3);
-                    })
-                    return console.log('response', response)
-                })
-        }
+        console.log('/*********************/')
+        console.log('entro aqui componentDidMount dashboard')
+        console.log('state dashboard', this.state)
+        console.log('/*********************/')
+        // if(this.props.token && this.props.userNameAux && init === 0) {
+        //     console.log('componentDidMount')
+        //     const api = new ChallengeGbm();
+        //     this.getUser({userName: this.props.userNameAux, token: this.props.token})
+            // api.getUser({userName: this.props.userNameAux, token: this.props.token})
+            //     .then((response) => {
+            //         console.log(response)
+            //         this.setState({userInfo: response}, () =>{
+            //             this.props.handleUser(response, 3);
+            //         })
+            //         return console.log('response', response)
+            //     })
+        // }
         
     }
     componentWillReceiveProps(nextProps) {
-        if (nextProps.isValid) {
-            this.getUser();
+        console.log('/*********************/')
+        console.log('entro aqui componentWillReceiveProps dashboard nextProps ', nextProps)
+        console.log(init)
+        console.log(nextProps.isValid)
+        console.log('/*********************/')
+        // if (!nextProps.isValid && init === 1) {
+        //     this.getUser({userName: this.props.userNameAux, token: this.props.token});
+        // }
+        // if (init === 0) {
+        //     return this.getUser({userName: this.props.userNameAux, token: this.props.token});
+        // }
+        if (nextProps.dashboardActive) {
+            if (nextProps.isValid && nextProps.auth.token.length >= 0) {
+                console.log('aqui bucle')
+                this.getUser({userName: this.props.userNameAux, token: this.props.token});
+            }
+
         }
     }
-    getUser() {
+    getUser(...user) {
+        console.log(user[0])
         const { auth } = this.props;
+        console.log(auth)
+        const val = auth ? auth: user[0];
         const api = new ChallengeGbm();
-        api.getUser(auth)
+        api.getUser(val)
           .then((response) => {
+              console.log(response)
               init = 1;
+              console.log(response)
               this.setState({userInfo: response}, () => {
                 this.props.handleUser(this.state.userInfo, init);
-                init = 2;
+                init = 3;
               })
               return console.log('response', response)
           })
       }
     render() {
-        const { userInfo } = this.state;
         const { isValid, data = [], token } = this.props;
         const header = ['FECHA', 'PORCENTAJE', 'PRECIO', 'VOLUMEN'];
      

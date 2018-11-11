@@ -4,20 +4,29 @@
         "firstName": "Edward",
         "secondName": "David",
         "firstLastName": "Llanca",
-        "secondLastName": "Haro"
+        "secondLastName": "Haro",
+        "roles": {
+            "admin": "ADMIN"
+        }
     },
     {
         "userName": "02458745",
         "firstName": "Howard",
         "secondName": "Tommy",
         "firstLastName": "Llanca",
-        "secondLastName": "Haro"
+        "secondLastName": "Haro",
+        "roles": {
+            "assistant": "ASSISTANT"
+        }
     },
     {
         "userName": "01254378",
         "firstName": "Linus",
         "secondName": "Alejandro",
         "firstLastName": "Llanca",
-        "secondLastName": "Guerrero"
+        "secondLastName": "Guerrero",
+        "roles": {
+            "executive": "EXECUTIVE"
+        }
     }
 ]

@@ -9,7 +9,7 @@ const Login = ({ validateUser = () => {}, isValid, user = {}, handleChange = () 
                     <div className="user-inputs">
                         <div className="input-group userName">
                             <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon3">UserName</span>
+                                <span className="input-group-text" id="basic-addon3">Username</span>
                             </div>
                             <input type="text" value={user.userName} onChange={handleChange.bind(user.userName)} className="form-control" id="userName" aria-describedby="basic-addon3" />
                         </div>
