@@ -6,7 +6,11 @@
 }
 .main-nav .row {
     padding: 5px;
+    margin: 10px;
 }
 .main-nav .options {
     border-left: 1px solid black;
+}
+.session-out {
+    cursor: pointer;
 }

@@ -36,27 +36,20 @@ class App extends Component {
     token = localStorageConfig.getToken('token');
     userNameAux = localStorageConfig.getToken('userName');
     if (this.state.isValid || this.state.dashboardActive || token) {
-      console.log('componentDidMount app.js')
       this.loadData();
       this.getUser({userName: userNameAux, token: token})
     }
   }
   componentDidUpdate() {
     if (this.state.auth.token !== '') {
-      console.log('componentDidUpdate app.js')
      token = localStorageConfig.getToken('token');
     }
   }
   getUser(user) {
-    console.log(user)
     const api = new ChallengeGbm();
         api.getUser(user)
       .then((response) => {
-          console.log(response)
           this.setState({userInfo: response})
-          // this.setState({userInfo: response}, () => {
-          //   this.props.handleUser(this.state.userInfo, init);
-          // })
       })
   }
 loadData = () => {
@@ -79,7 +72,7 @@ api.getData()
     this.setState({ dashboardActive: false })
   }
   validateUser = () => {
-    const { user, auth } = this.state;
+    const { user } = this.state;
     const reset = {
         userName: '',
         password: ''
@@ -96,7 +89,6 @@ api.getData()
             localStorageConfig.setValue('token', response.token);
             localStorageConfig.setValue('userName', response.userName);
           });
-          console.log(response)
           this.getUser(response);
           setTimeout(() => {
             this.loadData();
@@ -134,9 +126,6 @@ api.getData()
   }
   render() {
     const { isValid, dashboardActive, data, user, auth, userInfo, userLoaded } = this.state;
-    console.log(userLoaded)
-    console.log(userInfo)
-    console.log('token', token)
     return (
       <div className="App" style={{backgroundImage: `url(${ROUTE_IMG_BACKGROUND})`}}>
       {(isValid || token) && <NavComponent user={userInfo ? userInfo : userLoaded} token={token} handleFinishSession={this.handleFinishSession}/>}
