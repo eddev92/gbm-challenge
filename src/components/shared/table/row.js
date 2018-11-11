@@ -8,7 +8,6 @@ const RowComponent = ({ element = {} }) => {
   // transform array cols
   let cols = [];
   cols = TransformData.getCols(element);
-    console.log('cols', cols)
     return (
             <tr>
                 {  cols.map((elmt, index) => (

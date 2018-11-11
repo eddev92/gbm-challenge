@@ -4,3 +4,9 @@
     margin: auto;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.42), 0 2px 4px 0 rgba(0,0,0,0.08);
 }
+.main-nav .row {
+    padding: 5px;
+}
+.main-nav .options {
+    border-left: 1px solid black;
+}

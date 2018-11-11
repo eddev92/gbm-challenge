@@ -1,10 +1,10 @@
 import React from 'react';
 import '../../styles/login.css';
 
-const Login = ({ validateUser = () => {}, isValid, user = {}, handleChange = () => {} }) => {
+const Login = ({ validateUser = () => {}, isValid, user = {}, handleChange = () => {}, token }) => {
     console.log(isValid)
         return (
-            <div className={isValid ? 'body-login isValid row' : 'body-login row'}>
+            <div className={(isValid || token) ? 'body-login isValid row' : 'body-login row'}>
                 <div className="main-login col-xs-12 col-sm-7 col-md-6">
                     <img src="images/img_avatar.png" />
                     <div className="user-inputs">

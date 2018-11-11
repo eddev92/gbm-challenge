@@ -3,7 +3,6 @@ import RowComponent from './row';
 import '../../../styles/table.css';
 
 const TableComponent = ({ headerTitles = [], data }) => {
-    console.log(data)
 
         return (
             <div className="main-table table-responsive">

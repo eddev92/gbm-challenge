@@ -6,7 +6,10 @@ import ChallengeGbm from './api/challenge'
 import Auth from './api/auth';
 import Dashboard from './components/dashboard';
 import NavComponent from './components/shared/nav';
+import localStorageConfig from './utils/local-storage';
 let init = 0;
+let token;
+let userNameAux;
 class App extends Component {
   constructor(props) {
     super(props);
@@ -23,19 +26,20 @@ class App extends Component {
         userName: '',
         password: ''
       },
-      auth: {}
+      auth: {},
+      userInfo: {},
+      userLoaded: {}
     }
   }
-  componentDidUpdate() {
-    if (init === 0 && this.state.isValid) {
-      if (this.state.isValid === true && this.state.dashboardActive === true) {
-        setTimeout(() => {
-          this.loadData();
-        }, 2000)
+  componentDidMount() {
+    token = localStorageConfig.getToken('token');
+    userNameAux = localStorageConfig.getToken('userName');
+    console.log(token)
+    if (this.state.isValid || this.state.dashboardActive || token) {
+      this.loadData();
 
-      }
     }
-}
+  }
 loadData = () => {
 const api = new ChallengeGbm();
 
@@ -71,7 +75,13 @@ api.getData()
             alert('usuario invalido')
            return this.setState({ isValid: false, dashboardActive: false, user: reset });
           }
-          this.setState({ isValid: true, dashboardActive: true, auth: response });
+          this.setState({ isValid: true, dashboardActive: true, auth: response }, () => {
+            localStorageConfig.setValue('token', response.token);
+            localStorageConfig.setValue('userName', response.userName);
+          });
+          setTimeout(() => {
+            this.loadData();
+          }, 2000);
       })
   }
 
@@ -84,16 +94,47 @@ api.getData()
       this.setState({ user: auxUser });
     }
   }
+  handleUser = (user, value) => {
+    console.log('user in callback', user)
+    if (value === 3) {
+      return this.setState({ userLoaded: user })      
+    }
+    if (init === 0 && this.state.dashboardActive && value <= 1) {
+        this.setState({ userInfo: user })
+    }
+  }
+  handleFinishSession = () => {
+    console.log('delete')
+    const reset = {
+      userName: '',
+      password: ''
+    }
+    localStorageConfig.removeToken('token');
+    localStorageConfig.removeToken('userName');
+    window.location.reload()
+    this.setState({isValid: false, dashboardActive: false, user: reset })
+
+  }
   render() {
-    const { isValid, dashboardActive, data, user, auth } = this.state;
-    console.log(user)
-    return (
-      <div className="App" style={{backgroundImage: `url(${ROUTE_IMG_BACKGROUND})`}}>
-        <NavComponent />
-        <Login validateUser={this.validateUser} isValid={isValid} user={user} handleChange={this.handleChange}/>
-        <Dashboard dashboardActive={dashboardActive} isValid={isValid} data={data} auth={auth} />
+    const { isValid, dashboardActive, data, user, auth, userInfo, userLoaded } = this.state;
+    console.log('userInfo in appjs', userInfo)
+    if (token && userInfo) {
+      return (
+        <div className="App" style={{backgroundImage: `url(${ROUTE_IMG_BACKGROUND})`}}>
+        {(isValid || token) && <NavComponent user={userLoaded ? userLoaded : userInfo} token={token} handleFinishSession={this.handleFinishSession}/>}
+        <Dashboard dashboardActive={dashboardActive} isValid={isValid} data={data} auth={auth} userInfo={userInfo} handleUser={this.handleUser} token={token} userNameAux={userNameAux}/>
       </div>
-    );
+      )
+    } else {
+        return (
+          <div className="App" style={{backgroundImage: `url(${ROUTE_IMG_BACKGROUND})`}}>
+            {isValid && <NavComponent user={userInfo} handleFinishSession={this.handleFinishSession}/>}
+            {!token && <Login validateUser={this.validateUser} isValid={isValid} user={user} handleChange={this.handleChange} token={token}/>}
+            <Dashboard dashboardActive={dashboardActive} isValid={isValid} data={data} auth={auth} userInfo={userInfo} handleUser={this.handleUser} token={token} userNameAux={userNameAux}/>
+          </div>
+        );
+    }
+    
   }
 }
 
