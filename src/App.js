@@ -38,7 +38,7 @@ class App extends Component {
     if (this.state.isValid || this.state.dashboardActive || token) {
       console.log('componentDidMount app.js')
       this.loadData();
-
+      this.getUser({userName: userNameAux, token: token})
     }
   }
   componentDidUpdate() {
@@ -46,6 +46,18 @@ class App extends Component {
       console.log('componentDidUpdate app.js')
      token = localStorageConfig.getToken('token');
     }
+  }
+  getUser(user) {
+    console.log(user)
+    const api = new ChallengeGbm();
+        api.getUser(user)
+      .then((response) => {
+          console.log(response)
+          this.setState({userInfo: response})
+          // this.setState({userInfo: response}, () => {
+          //   this.props.handleUser(this.state.userInfo, init);
+          // })
+      })
   }
 loadData = () => {
 const api = new ChallengeGbm();
@@ -67,7 +79,7 @@ api.getData()
     this.setState({ dashboardActive: false })
   }
   validateUser = () => {
-    const { user } = this.state;
+    const { user, auth } = this.state;
     const reset = {
         userName: '',
         password: ''
@@ -84,6 +96,8 @@ api.getData()
             localStorageConfig.setValue('token', response.token);
             localStorageConfig.setValue('userName', response.userName);
           });
+          console.log(response)
+          this.getUser(response);
           setTimeout(() => {
             this.loadData();
           }, 2000);
@@ -123,28 +137,10 @@ api.getData()
     console.log(userLoaded)
     console.log(userInfo)
     console.log('token', token)
-    // if (token && userInfo) {
-    //   console.log('renderizo aca')
-    //   return (
-    //     <div className="App" style={{backgroundImage: `url(${ROUTE_IMG_BACKGROUND})`}}>
-    //     {(isValid || token) && <NavComponent user={userLoaded ? userLoaded : userInfo} token={token} handleFinishSession={this.handleFinishSession}/>}
-    //     {(userLoaded.firstName && userLoaded.firstName.length > 0) && <Login validateUser={this.validateUser} isValid={isValid} user={user} handleChange={this.handleChange} token={token}/>}
-    //     <Dashboard dashboardActive={dashboardActive} isValid={isValid} data={data} auth={auth} userInfo={userInfo} handleUser={this.handleUser} token={token} userNameAux={userNameAux}/>
-    //   </div>
-    //   )
-    // } else {
-    //     return (
-    //       <div className="App" style={{backgroundImage: `url(${ROUTE_IMG_BACKGROUND})`}}>
-    //         {isValid && <NavComponent user={userInfo} handleFinishSession={this.handleFinishSession}/>}
-    //         <Login validateUser={this.validateUser} isValid={isValid} user={user} handleChange={this.handleChange} token={token}/>
-    //         <Dashboard dashboardActive={dashboardActive} isValid={isValid} data={data} auth={auth} userInfo={userInfo} handleUser={this.handleUser} token={token} userNameAux={userNameAux}/>
-    //       </div>
-    //     );
-    // }
     return (
       <div className="App" style={{backgroundImage: `url(${ROUTE_IMG_BACKGROUND})`}}>
-      {(isValid || token) && <NavComponent user={userLoaded ? userLoaded : userInfo} token={token} handleFinishSession={this.handleFinishSession}/>}
-      <Login validateUser={this.validateUser} isValid={isValid} dashboardActive={dashboardActive} user={user} handleChange={this.handleChange} token={token}/>
+      {(isValid || token) && <NavComponent user={userInfo ? userInfo : userLoaded} token={token} handleFinishSession={this.handleFinishSession}/>}
+      <Login validateUser={this.validateUser} isValid={isValid} user={user} handleChange={this.handleChange} token={token}/>
       <Dashboard dashboardActive={dashboardActive} isValid={isValid} data={data} auth={auth} userInfo={userInfo} handleUser={this.handleUser} token={token} userNameAux={userNameAux}/>
     </div>
     )
