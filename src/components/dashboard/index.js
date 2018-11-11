@@ -19,17 +19,37 @@ class Dashboard extends Component {
             userInfo: props.userInfo
         }
     }
+    componentDidMount() {
+        console.log('/*********************/')
+        console.log('entro aqui componentDidMount dashboard')
+        console.log('state dashboard', this.state)
+        console.log('/*********************/')
+        // if(this.props.token && this.props.userNameAux && init === 0) {
+        //     console.log('componentDidMount')
+        //     const api = new ChallengeGbm();
+        //     this.getUser({userName: this.props.userNameAux, token: this.props.token})
+            // api.getUser({userName: this.props.userNameAux, token: this.props.token})
+            //     .then((response) => {
+            //         console.log(response)
+            //         this.setState({userInfo: response}, () =>{
+            //             this.props.handleUser(response, 3);
+            //         })
+            //         return console.log('response', response)
+            //     })
+        // }
+        
+    }
     componentWillReceiveProps(nextProps) {
         console.log(nextProps)
-        if (loadUser < 1 && !nextProps.dashboardActive && !nextProps.isValid) {
+        console.log(loadUser)
+        if (loadUser <= 1 && !nextProps.dashboardActive && !nextProps.isValid) {
             if (nextProps.token !== '') {
-                loadUser = 1;
                 console.log('bucle aqui D:')
                 this.getUser({userName: this.props.userNameAux, token: this.props.token});
                 }
         }
 
-        if (nextProps.dashboardActive) {
+        if (nextProps.dashboardActive ) {
             if (nextProps.isValid && nextProps.auth.token.length >= 0) {
                 console.log('aqui bucle')
                 this.getUser({userName: this.props.userNameAux, token: this.props.token});
@@ -47,7 +67,6 @@ class Dashboard extends Component {
               console.log(response)
               this.setState({userInfo: response}, () => {
                 this.props.handleUser(this.state.userInfo, init);
-                init = 3;
               })
           })
         } else {
@@ -56,7 +75,7 @@ class Dashboard extends Component {
               init = 1;
               this.setState({userInfo: response}, () => {
                 this.props.handleUser(this.state.userInfo, init);
-                init = 3;
+                loadUser = 2;
               })
           })
         }        
