@@ -42,11 +42,8 @@ function findUser(userName, data) {
 function getUsers(userName, res) {
   fs.readFile('./mocks/users.json', 'utf8', (err, data) => {
     if (err) return console.log('err', err);
-    console.log('userName getUser', userName)
     const aux = JSON.parse(data);
-    console.log('data getUser', aux)
     userInfo = findUser(userName, aux);
-    console.log('userInfo', userInfo)
       if (!userInfo) {
         return res.send({status: 404, message: 'user not found'})
       } else {
@@ -68,9 +65,7 @@ function authenticationUser(userName, password, res) {
   fs.readFile('./mocks/auth.json', 'utf8', (err, data) => {
     if (err) return console.log('err', err);
     auth = JSON.parse(data);
-    console.log('auth', auth)
     user = findUserWithToken(userName, password, auth)
-    console.log('user found', user)
       if (!user) {
         return res.send({status: 404, message: 'user not found'})
       } else {
@@ -96,23 +91,18 @@ app.get('/getData', (req, res) => {
   });
 
 app.post('/auth', (req, res) => {
-  console.log('req.body', req.body)
   const { userName, password } = req.body
-  // authenticationUser(userName, password);
   authenticationUser(userName, password, res);
 });
 app.get('/token', (req, res) => {
   res.send(users);
 });
 app.post('/user', (req, res) => {
-  console.log('req.body', req.body)
-  const { userName, token } = req.body;
+  const { userName } = req.body;
   getUsers(userName, res);
 });
 app.listen(8000, () => {
     loadGbmService()
     getTokens();
-    // authenticationUser();
-    // getUsers();
     console.log('app corriendo en el puerto 8000')
 })

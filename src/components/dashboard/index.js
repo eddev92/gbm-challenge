@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TableComponent from '../shared/table/index';
 import '../../styles/dashboard.css';
 import Spinner from '../shared/spinner';
+import {MESSAGE_FILTER} from '../../constants/constants';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -28,7 +29,7 @@ class Dashboard extends Component {
         const { valueToFilter } = this.state;
         let filtereds = [];
         if (valueToFilter.type === 'Default') {
-            alert('Ambos campos son requeridos para realizar la búsquedad')
+            alert(MESSAGE_FILTER.MESSAGE_001)
             return this.setState({ listFiltered: data.resultObj });
         }
         if(valueToFilter.key && valueToFilter.type) {
@@ -39,15 +40,14 @@ class Dashboard extends Component {
                 }
             })
         } else {
-            return alert('Ambos campos son requeridos para realizar la búsquedad')
+            return alert(MESSAGE_FILTER.MESSAGE_001)
         }
         if (filtereds.length === 0) {
-            alert('No se encontraron registros con el valor: ' + " " + valueToFilter.key);            
+            alert(MESSAGE_FILTER.MESSAGE_002 + " " + valueToFilter.key);            
         }
     }
     handleValueToFilter = (value) => {
         const { valueToFilter } = this.state;
-
         if (value) {
             const val = value.target.value;
             const target = value.target.id;

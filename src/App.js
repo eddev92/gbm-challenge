@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import {ROUTE_IMG_BACKGROUND} from './constants/constants';
+import {ROUTE_IMG_BACKGROUND, AUTH} from './constants/constants';
 import Login from './components/login';
 import ChallengeGbm from './api/challenge'
 import Auth from './api/auth';
@@ -33,8 +33,8 @@ class App extends Component {
     }
   }
   componentDidMount() {
-    token = localStorageConfig.getToken('token');
-    userNameAux = localStorageConfig.getToken('userName');
+    token = localStorageConfig.getToken(AUTH.TOKEN);
+    userNameAux = localStorageConfig.getToken(AUTH.USERNAME);
     if (this.state.isValid || this.state.dashboardActive || token) {
       this.loadData();
       this.getUser({userName: userNameAux, token: token})
@@ -86,8 +86,8 @@ api.getData()
            return this.setState({ isValid: false, dashboardActive: false, user: reset });
           }
           this.setState({ isValid: true, dashboardActive: true, auth: response }, () => {
-            localStorageConfig.setValue('token', response.token);
-            localStorageConfig.setValue('userName', response.userName);
+            localStorageConfig.setValue(AUTH.TOKEN, response.token);
+            localStorageConfig.setValue(AUTH.USERNAME, response.userName);
           });
           this.getUser(response);
           setTimeout(() => {
@@ -118,8 +118,8 @@ api.getData()
       userName: '',
       password: ''
     }
-    localStorageConfig.removeToken('token');
-    localStorageConfig.removeToken('userName');
+    localStorageConfig.removeToken(AUTH.TOKEN);
+    localStorageConfig.removeToken(AUTH.USERNAME);
     window.location.reload()
     this.setState({isValid: false, dashboardActive: false, user: reset })
 
