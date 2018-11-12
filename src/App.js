@@ -81,20 +81,26 @@ api.getData()
 
     api.AuthUser(user)
       .then((response) => {
-          if (response.status) {
-            alert('usuario invalido')
-           return this.setState({ isValid: false, dashboardActive: false, user: reset });
+        console.log(response)
+        if (response) {
+            if (response.status) {
+              alert('usuario invalido')
+            return this.setState({ isValid: false, dashboardActive: false, user: reset });
+            }
+            this.setState({ isValid: true, dashboardActive: true, auth: response }, () => {
+              localStorageConfig.setValue(AUTH.TOKEN, response.token);
+              localStorageConfig.setValue(AUTH.USERNAME, response.userName);
+            });
+            this.getUser(response);
+            setTimeout(() => {
+              this.loadData();
+            }, 2000);
+          } else {
+            this.setState({user: reset});
+            alert('Ocurrió un error en el sistema, inténtalo nuevamente.')
           }
-          this.setState({ isValid: true, dashboardActive: true, auth: response }, () => {
-            localStorageConfig.setValue(AUTH.TOKEN, response.token);
-            localStorageConfig.setValue(AUTH.USERNAME, response.userName);
-          });
-          this.getUser(response);
-          setTimeout(() => {
-            this.loadData();
-          }, 2000);
-      })
-  }
+        })
+    }
 
   handleChange = (evt) => {
     const { user } = this.state;
