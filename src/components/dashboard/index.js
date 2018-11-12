@@ -42,9 +42,7 @@ class Dashboard extends Component {
             return alert('Ambos campos son requeridos para realizar la búsquedad')
         }
         if (filtereds.length === 0) {
-            this.setState({ listFiltered: data.resultObj })
-            alert('No se encontraron registros con el valor: ' + " " + valueToFilter.key);
-            
+            alert('No se encontraron registros con el valor: ' + " " + valueToFilter.key);            
         }
     }
     handleValueToFilter = (value) => {
@@ -70,7 +68,7 @@ class Dashboard extends Component {
                 <div className={(isValid || token) ? 'main-dashboard col-10 isLoged' : 'main-dashboard col-10'} >
                 <div className="form-group">
                     <select className="form-control col-md-4" id="type" onChange={this.handleValueToFilter.bind(valueToFilter.type)} value={valueToFilter.type}>
-                        <option value="Default">Seleccione</option>
+                        <option value="Default">Todos</option>
                         <option value="Volumen">Volumen</option>
                         <option value="Precio">Precio</option>
                     </select>
